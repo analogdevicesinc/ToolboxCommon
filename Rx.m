@@ -1,9 +1,17 @@
-classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime
+classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
+         & adi.common.BufferADI
     % Rx: Common shared functions between receiver classes
     properties(Constant, Hidden, Logical)
         %EnableCyclicBuffers Enable Cyclic Buffers
         %   Not used for RX
         EnableCyclicBuffers = false;
+    end
+    
+    properties(Hidden, Logical, Nontunable)
+        %BufferTypeConversionEnable Buffer Type Conversion Enable
+        %   Utilize iio_channel_convert on each sample. If unnecessary
+        %   there is a large performance penalty.
+        BufferTypeConversionEnable = false;
     end
     
     methods (Hidden, Access = protected)
@@ -73,8 +81,32 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime
                     kd = kd + 2;
                 end
             else
-                [data, valid] = getData(obj);
-                data = data.';
+                if obj.BufferTypeConversionEnable
+                    [dataRAW, valid] = getData(obj);
+                    % Channels must be in columns or pointer math fails
+                    dataRAW = dataRAW.';
+                    [D1, D2] = size(dataRAW);
+                    data = coder.nullcopy(zeros(D1, D2, obj.dataTypeStr));
+                    dataPtr = libpointer(obj.ptrTypeStr,data);
+                    dataRAWPtr = libpointer(obj.ptrTypeStr,dataRAW);
+                    % Convert hardware format to human format channel by
+                    % channel
+                    for l = 0:D2-1
+                        chanPtr = getChan(obj, obj.iioDev, obj.channel_names{l+1}, false);
+                        % Pull out column
+                        tmpPtrSrc = dataRAWPtr + D1*l;
+                        tmpPtrDst = dataPtr + D1*l;
+                        setdatatype(tmpPtrSrc,obj.ptrTypeStr, D1, 1);
+                        setdatatype(tmpPtrDst,obj.ptrTypeStr, D1, 1);
+                        for k=0:D1-1
+                            iio_channel_convert(obj,chanPtr,tmpPtrDst+k,tmpPtrSrc+k);
+                        end
+                    end
+                    data = dataPtr.Value;
+                else
+                    [data, valid] = getData(obj);
+                    data = data.';
+                end
             end
             
         end
