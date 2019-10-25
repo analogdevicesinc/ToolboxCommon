@@ -30,6 +30,16 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             [status, rValue] = iio_channel_attr_read_longlong(obj,chanPtr,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
+
+        function rValue = getAttributeDouble(obj,id,attr,isOutput)
+            phydev = getDev(obj, obj.phyDevName);
+            chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
+            status = cPtrCheck(obj,chanPtr);
+            cstatus(obj,status,['Channel: ' id ' not found']);
+            [status, rValue] = iio_channel_attr_read_double(obj,chanPtr,attr);
+            cstatus(obj,status,['Error reading attribute: ' attr]);
+        end
+
         
         function setAttributeBool(obj,id,attr,value,isOutput)
             phydev = getDev(obj, obj.phyDevName);
