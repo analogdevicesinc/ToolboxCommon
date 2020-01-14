@@ -3,8 +3,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
     
     methods (Hidden)
         
-        function setAttributeLongLong(obj,id,attr,value,isOutput,tol)
-            phydev = getDev(obj, obj.phyDevName);
+        function setAttributeLongLong(obj,id,attr,value,isOutput,tol,phydev)
+            if nargin < 7
+                phydev = getDev(obj, obj.phyDevName);
+            end
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
@@ -22,8 +24,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             end
         end
         
-        function rValue = getAttributeLongLong(obj,id,attr,isOutput)
-            phydev = getDev(obj, obj.phyDevName);
+        function rValue = getAttributeLongLong(obj,id,attr,isOutput,phydev)
+            if nargin < 5
+                phydev = getDev(obj, obj.phyDevName);
+            end
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
@@ -66,8 +70,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
         
-        function setAttributeRAW(obj,id,attr,value,isOutput)
-            phydev = getDev(obj, obj.phyDevName);
+        function setAttributeRAW(obj,id,attr,value,isOutput,phydev)
+            if nargin < 6
+                phydev = getDev(obj, obj.phyDevName);
+            end
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
@@ -78,8 +84,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             end
         end
         
-        function rValue = getAttributeRAW(obj,id,attr,isOutput)
-            phydev = getDev(obj, obj.phyDevName);
+        function rValue = getAttributeRAW(obj,id,attr,isOutput,phydev)
+            if nargin < 5
+                phydev = getDev(obj, obj.phyDevName);
+            end
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
