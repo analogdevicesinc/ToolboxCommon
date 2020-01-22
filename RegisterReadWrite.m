@@ -1,6 +1,6 @@
 classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base 
     
-    methods (Hidden, Access = protected)
+    methods (Hidden)
         function setRegister(obj, value, addr, mask_bin, bit_shift)
             phydev = getDev(obj, obj.phyDevName);
             if (nargin == 5)
