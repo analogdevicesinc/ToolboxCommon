@@ -49,7 +49,6 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             if nargin < 6
                 phydev = getDev(obj, obj.phyDevName);
             end
-            phydev = getDev(obj, obj.phyDevName);
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
