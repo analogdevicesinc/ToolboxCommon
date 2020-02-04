@@ -1,4 +1,4 @@
-classdef (Abstract) Attribute < matlabshared.libiio.base 
+classdef (Abstract) Attribute < adi.common.RegisterReadWrite & matlabshared.libiio.base 
     % Attribute IIO attribute function calls
     
     methods (Hidden)
