@@ -1,8 +1,10 @@
 classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base 
     
     methods (Hidden)
-        function setRegister(obj, value, addr, mask_bin, bit_shift)
-            phydev = getDev(obj, obj.phyDevName);
+        function setRegister(obj, value, addr, mask_bin, bit_shift, phydev)
+            if (nargin < 6)
+                phydev = getDev(obj, obj.phyDevName);
+            end
             if (nargin == 5)
                 value = value*2^(bit_shift);
             end
@@ -22,8 +24,10 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
             end            
         end
         
-        function value = getRegister(obj, addr, mask_bin, bit_shift)
-            phydev = getDev(obj, obj.phyDevName);
+        function value = getRegister(obj, addr, mask_bin, bit_shift, phydev)
+            if (nargin < 5)
+                phydev = getDev(obj, obj.phyDevName);
+            end
             addr_dec = hex2dec(addr);
             % Check
             [status, value] = iio_device_reg_read(obj,phydev,addr_dec);
