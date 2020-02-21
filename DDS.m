@@ -56,7 +56,7 @@ classdef (Abstract) DDS < matlabshared.libiio.base
         EnabledChannels
     end
     
-    properties (Abstract, Hidden, Constant)
+    properties (Abstract, Hidden)
        channel_names 
     end
     
