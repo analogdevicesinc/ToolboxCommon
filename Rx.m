@@ -12,6 +12,8 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
         %   Utilize iio_channel_convert on each sample. If unnecessary
         %   there is a large performance penalty.
         BufferTypeConversionEnable = false;
+        %Unbuffered Enable data collection using attributes not buffers
+        Unbuffered = false;
     end
     
     methods (Hidden, Access = protected)
@@ -82,7 +84,22 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
                 end
             else
                 if obj.BufferTypeConversionEnable
-                    [dataRAW, valid] = getData(obj);
+                    if obj.Unbuffered
+                        ecs = length(obj.EnabledChannels);
+                        data = zeros(obj.SamplesPerFrame,ecs);
+                        for samp = 1:obj.SamplesPerFrame
+                            for ec = 1:ecs
+                                id = obj.channel_names{obj.EnabledChannels(ec)};
+                                rValue = getAttributeLongLong(obj,id,'raw',false);
+%                                 data(samp,ec) = swapbytes(int32(rValue));
+                                data(samp,ec) = int32(rValue);
+                            end
+                        end
+                        valid = true;
+                        return
+                    else
+                        [dataRAW, valid] = getData(obj);
+                    end
                     % Channels must be in columns or pointer math fails
                     dataRAW = dataRAW.';
                     [D1, D2] = size(dataRAW);
