@@ -118,8 +118,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & adi.common.DebugA
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
         
-        function setDeviceAttributeRAW(obj,attr,value)
-            phydev = getDev(obj, obj.phyDevName);
+        function setDeviceAttributeRAW(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
             bytes = iio_device_attr_write(obj,phydev,attr,value);
             if bytes <= 0
                 status = -1;
@@ -127,8 +129,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & adi.common.DebugA
             end
         end
         
-        function rValue = getDeviceAttributeRAW(obj,attr)
-            phydev = getDev(obj, obj.phyDevName);
+        function rValue = getDeviceAttributeRAW(obj,attr,phydev)
+            if nargin < 3
+                phydev = getDev(obj, obj.phyDevName);
+            end
             [status, rValue] = iio_device_attr_read(obj,phydev,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
