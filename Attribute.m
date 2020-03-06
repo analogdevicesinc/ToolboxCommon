@@ -1,4 +1,4 @@
-classdef (Abstract) Attribute < matlabshared.libiio.base 
+classdef (Abstract) Attribute < adi.common.RegisterReadWrite
     % Attribute IIO attribute function calls
     
     methods (Hidden)
@@ -87,8 +87,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
         
-        function setDeviceAttributeRAW(obj,attr,value)
-            phydev = getDev(obj, obj.phyDevName);
+        function setDeviceAttributeRAW(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
             bytes = iio_device_attr_write(obj,phydev,attr,value);
             if bytes <= 0
                 status = -1;
@@ -96,8 +98,10 @@ classdef (Abstract) Attribute < matlabshared.libiio.base
             end
         end
         
-        function rValue = getDeviceAttributeRAW(obj,attr)
-            phydev = getDev(obj, obj.phyDevName);
+        function rValue = getDeviceAttributeRAW(obj,attr,phydev)
+            if nargin < 3
+                phydev = getDev(obj, obj.phyDevName);
+            end
             [status, rValue] = iio_device_attr_read(obj,phydev,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
