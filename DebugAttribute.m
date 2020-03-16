@@ -1,8 +1,10 @@
 classdef (Abstract) DebugAttribute < matlabshared.libiio.base 
     
     methods (Hidden)
-        function setDebugAttributeLongLong(obj,attr,value)
-            phydev = getDev(obj, obj.phyDevName);
+        function setDebugAttributeLongLong(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
             if (nargin == 1)
                 iio_device_debug_attr_write_longlong(obj,phydev, 'initialize',1);
                 return;
@@ -18,8 +20,10 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
             end            
         end
         
-        function setDebugAttributeBool(obj,attr,value)
-            phydev = getDev(obj, obj.phyDevName);
+        function setDebugAttributeBool(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
             if (nargin == 1)
                 iio_device_debug_attr_write_bool(obj,phydev, 'initialize',1);
                 return;

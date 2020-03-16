@@ -1,7 +1,7 @@
 classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base 
     
     methods (Hidden)
-        function setRegister(obj, value, addr,phydev)
+        function setRegister(obj, addr, value, phydev)
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -10,7 +10,7 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
             cstatus(obj,status,['Address write failed for : ' addr ' with value ' num2str(value)]);
         end
         
-        function value = getRegister(obj, addr,phydev)
+        function value = getRegister(obj, addr, phydev)
             if nargin < 3
                 phydev = getDev(obj, obj.phyDevName);
             end
