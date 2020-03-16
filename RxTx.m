@@ -171,11 +171,12 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
                 flag = flag || strcmpi(prop,'GainChannel1') &&...
                     ~strcmpi(obj.GainControlModeChannel1, 'manual');
             end
-            if obj.channelCount < 3
+            if max(obj.EnabledChannels) < 2
                 flag = flag || strcmpi(prop,'GainChannel1');
                 flag = flag || strcmpi(prop,'GainControlModeChannel1');
                 flag = flag || strcmpi(prop,'EnableQuadratureTrackingChannel1');
             end
+           
         end
         
         function releaseChanBuffers(obj)
