@@ -114,8 +114,11 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & adi.common.DebugA
             chanPtr = iio_device_find_channel(obj,phydev,id,isOutput);%FIXME (INVERSION)
             status = cPtrCheck(obj,chanPtr);
             cstatus(obj,status,['Channel: ' id ' not found']);
-            [status, rValue] = iio_channel_attr_read(obj,chanPtr,attr,1024);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
+            [bytes, rValue] = iio_channel_attr_read(obj,chanPtr,attr,1024);
+            if bytes <= 0
+                status = -1;
+                cstatus(obj,status,['Error reading attribute: ' attr]);
+            end
         end
         
         function setDeviceAttributeRAW(obj,attr,value,phydev)
