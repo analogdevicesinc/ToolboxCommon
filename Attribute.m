@@ -1,4 +1,5 @@
-classdef (Abstract) Attribute < adi.common.RegisterReadWrite & adi.common.DebugAttribute
+classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
+        adi.common.DebugAttribute & adi.common.DeviceAttribute
     % Attribute IIO attribute function calls
     
     methods (Hidden)
@@ -136,12 +137,14 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & adi.common.DebugA
             end
         end
         
-        function rValue = getDeviceAttributeRAW(obj,attr,phydev)
-            if nargin < 3
+        function rValue = getDeviceAttributeRAW(obj,attr,len,phydev)
+            if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
-            [status, rValue] = iio_device_attr_read(obj,phydev,attr);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
+            [status, rValue] = iio_device_attr_read(obj,phydev,attr,len);
+            if status == 0
+                cstatus(obj,-1,['Error reading attribute: ' attr]);
+            end
         end
         
     end
