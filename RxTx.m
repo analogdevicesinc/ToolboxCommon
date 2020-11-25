@@ -5,6 +5,10 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
         ConnectedToDevice = false;
     end
     
+    properties (Nontunable, Hidden, Logical)
+        EnableChipB = false;
+    end
+    
     properties(Nontunable)
         %EnabledChannels Enabled Channels
         %   Indexs of channels to be enabled. Input should be a [1xN]

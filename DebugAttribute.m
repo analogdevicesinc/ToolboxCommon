@@ -9,10 +9,6 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
             end
-            if (nargin == 1)
-                iio_device_debug_attr_write_longlong(obj,phydev, 'initialize',1);
-                return;
-            end
             status = iio_device_debug_attr_write_longlong(obj,phydev,attr,value);
             cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' num2str(value)]);
             % Check
@@ -26,17 +22,13 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
             end
         end
         
-        function setDebugAttributeBool(obj,attr,value,skipCheck,phydev)
+        function setDebugAttributeBool(obj,attr,value,skipCheck,phydev) 
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
                 skipCheck = false;
             end
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
-            end
-            if (nargin == 1)
-                iio_device_debug_attr_write_bool(obj,phydev, 'initialize',1);
-                return;
             end
             status = iio_device_debug_attr_write_bool(obj,phydev,attr,value);
             cstatus(obj,status,['Attribute write failed for : ' attr]);
