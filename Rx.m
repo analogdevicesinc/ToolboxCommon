@@ -29,29 +29,29 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
             numOut = 2;
         end
         
-        function names = getOutputNamesImpl(~)
+        function varargout = getOutputNamesImpl(~)
             % Return output port names for System block
-            names = {'data','valid'};
+            varargout = {'data','valid'};
         end
         
-        function sizes = getOutputSizeImpl(obj)
+        function varargout = getOutputSizeImpl(obj)
             % Return size for each output port
-            sizes = {[obj.SamplesPerFrame,obj.channelCount],[1,1]};
+            varargout = {[obj.SamplesPerFrame,obj.channelCount],[1,1]};
         end
         
-        function types = getOutputDataTypeImpl(~)
+        function varargout = getOutputDataTypeImpl(~)
             % Return data type for each output port
-            types = ["int16","logical"];
+            varargout = {"int16","logical"}; %#ok<CLARRSTR>
         end
         
-        function complexities = isOutputComplexImpl(obj)
+        function varargout = isOutputComplexImpl(obj)
             % Return true for each output port with complex data
-            complexities = {obj.ComplexData,false};
+            varargout = {obj.ComplexData,false};
         end
         
-        function fixed = isOutputFixedSizeImpl(~)
+        function varargout = isOutputFixedSizeImpl(~)
             % Return true for each output port with fixed size
-            fixed = {true,true};
+            varargout = {true,true};
         end
     end
     
