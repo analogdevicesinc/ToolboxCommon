@@ -113,6 +113,7 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
         function setupImpl(obj)
             % Call the superclass method
             obj.Count(1,obj);
+            obj.setupDataType(obj.dataTypeStr);
             setupImpl@matlabshared.libiio.base(obj);
         end
         
@@ -177,6 +178,10 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
                 flag = flag || strcmpi(prop,'EnableQuadratureTrackingChannel1');
             end
         end
+        
+    end
+        
+    methods (Hidden, Access = {?matlabshared.libiio.base, ?matlab.unittest.TestCase})
         
         function releaseChanBuffers(obj)
             % Destroy the buffers
