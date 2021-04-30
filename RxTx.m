@@ -181,7 +181,7 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
         
     end
         
-    methods (Hidden, Access = {?matlabshared.libiio.base, ?matlab.unittest.TestCase})
+    methods (Hidden, Access = {?handle})
         
         function releaseChanBuffers(obj)
             % Destroy the buffers
