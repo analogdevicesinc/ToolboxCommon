@@ -17,6 +17,12 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
                 cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
             end            
         end
+
+        function rValue = getDebugAttributeLongLong(obj,attr)
+            phydev = getDev(obj, obj.phyDevName);
+            [status, rValue] = iio_device_debug_attr_read_longlong(obj,phydev,attr);
+            cstatus(obj,status,['Error reading attribute: ' attr]);
+        end
         
         function setDebugAttributeBool(obj,attr,value)
             phydev = getDev(obj, obj.phyDevName);
