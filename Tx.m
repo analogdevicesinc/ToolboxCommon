@@ -66,6 +66,9 @@ classdef (Abstract) Tx  < adi.common.RxTx & adi.common.DDS
             else
                 valid = true;
                 obj.DDSUpdate();
+                if (obj.EnableChipB)
+                    obj.DDSUpdateChipB();
+                end
             end            
         end
         
