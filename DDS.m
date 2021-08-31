@@ -56,8 +56,12 @@ classdef (Abstract) DDS < matlabshared.libiio.base
         EnabledChannels
     end
     
-    properties (Abstract, Hidden, Constant)
+    properties (Abstract, Hidden)
        channel_names 
+    end
+    
+    properties (Hidden)
+        dds_channel_names = [];
     end
     
     methods
@@ -73,11 +77,16 @@ classdef (Abstract) DDS < matlabshared.libiio.base
             s = size(value);
             c1 = s(1) == 2;
             c2 = s(2) > 0;
-            c3 = s(2) <= length(obj.channel_names);
+            if isempty(obj.dds_channel_names)
+                 chans = length(obj.channel_names);
+            else               
+                 chans = length(obj.dds_channel_names);
+            end
+            c3 = s(2) <= chans;
             assert(c1 && c2 && c3,...
                 sprintf(['DDSFrequencies expected to be size [2xN]',...
                 ' where 1<=N<=%d'],...
-                length(obj.channel_names)));
+                chans));
             
             obj.DDSFrequencies = value;
             if obj.ConnectedToDevice
@@ -89,11 +98,16 @@ classdef (Abstract) DDS < matlabshared.libiio.base
             s = size(value);
             c1 = s(1) == 2;
             c2 = s(2) > 0;
-            c3 = s(2) <= length(obj.channel_names);
+            if isempty(obj.dds_channel_names)
+                 chans = length(obj.channel_names);
+            else               
+                 chans = length(obj.dds_channel_names);
+            end
+            c3 = s(2) <= chans;
             assert(c1 && c2 && c3,...
                 sprintf(['DDSFrequencies expected to be size [2xN]',...
                 ' where 1<=N<=%d'],...
-                length(obj.channel_names)));
+                chans));
             assert(~any(value>1,'all'),'DDSScales cannot > 1');
             assert(~any(value<0,'all'),'DDSScales cannot < 0');
             
@@ -107,11 +121,16 @@ classdef (Abstract) DDS < matlabshared.libiio.base
             s = size(value);
             c1 = s(1) == 2;
             c2 = s(2) > 0;
-            c3 = s(2) <= length(obj.channel_names);
+            if isempty(obj.dds_channel_names)
+                 chans = length(obj.channel_names);
+            else               
+                 chans = length(obj.dds_channel_names);
+            end
+            c3 = s(2) <= chans;
             assert(c1 && c2 && c3,...
                 sprintf(['DDSFrequencies expected to be size [2xN]',...
                 ' where 1<=N<=%d'],...
-                length(obj.channel_names)));
+                chans));
             assert(~any(value>360000,'all'),'DDSPhases cannot > 1');
             assert(~any(value<0,'all'),'DDSPhases cannot < 0');
             
