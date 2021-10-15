@@ -16,8 +16,8 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             % Check
             [status, rValue] = iio_channel_attr_read_longlong(obj,chanPtr,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
-            if nargin<6
-                tol = sqrt(eps);
+            if ~exist('tol') || ~isa(tol,'double')
+                tol = double(sqrt(eps));
             end
             if abs(value - rValue) > tol
                 status = -1;
@@ -37,8 +37,8 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             % Check
             [status, rValue] = iio_channel_attr_read_double(obj,chanPtr,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
-            if nargin<6
-                tol = sqrt(eps);
+            if ~exist('tol') || ~isa(tol,'double')
+                tol = double(sqrt(eps));
             end
             if abs(value - rValue) > tol
                 status = -1;
