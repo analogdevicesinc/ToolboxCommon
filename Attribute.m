@@ -137,6 +137,29 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             end
         end
         
+        function setDeviceAttributeLongLong(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
+            iio_device_attr_write_longlong(obj,phydev,attr,value);
+            % Check
+            [status, rValue] = iio_device_attr_read_longlong(obj,phydev,attr);
+            cstatus(obj,status,['Error reading attribute: ' attr]);
+            if value ~= rValue
+                status = -1;
+                cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+            end
+        end
+        
+        function rValue = getDeviceAttributeLongLong(obj,attr,phydev)
+            if nargin < 3
+                phydev = getDev(obj, obj.phyDevName);
+            end
+            % Check
+            [status, rValue] = iio_device_attr_read_longlong(obj,phydev,attr);
+            cstatus(obj,status,['Error reading attribute: ' attr]);
+        end
+        
         function rValue = getDeviceAttributeRAW(obj,attr,len,phydev)
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
