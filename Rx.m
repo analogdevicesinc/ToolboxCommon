@@ -17,8 +17,13 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
     methods (Hidden, Access = protected)
         
         function sts = getSampleTimeImpl(obj)
-            sts = createSampleTime(obj,'Type','Discrete',...
-                'SampleTime',obj.SamplesPerFrame/obj.SampleRate);
+            if isa(obj.SampleRate,'char')
+                sts = createSampleTime(obj,'Type','Discrete',...
+                    'SampleTime',obj.SamplesPerFrame/str2double(obj.SampleRate));
+            else
+                sts = createSampleTime(obj,'Type','Discrete',...
+                    'SampleTime',obj.SamplesPerFrame/obj.SampleRate);
+            end
         end
         
     end
