@@ -18,7 +18,7 @@ classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
         
         function sts = getSampleTimeImpl(obj)
             sts = createSampleTime(obj,'Type','Discrete',...
-                'SampleTime',obj.SamplesPerFrame/obj.SamplingRate);
+                'SampleTime',obj.SamplesPerFrame/obj.SampleRate);
         end
         
     end
