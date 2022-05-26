@@ -1,6 +1,6 @@
 classdef (Abstract) RxTx < matlabshared.libiio.base
     
-    properties (Hidden)
+    properties (Hidden, Access=protected)
         enabledChannels = false;
         ConnectedToDevice = false;
     end
