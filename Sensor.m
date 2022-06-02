@@ -8,11 +8,6 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
     end
 
     properties (Nontunable)
-        %FrameSize Frame Size
-        FrameSize
-    end
-
-    properties (Nontunable)
        %ReadMode Read Mode
        %    Specify whether to return the latest or the oldest data
        %    samples. The number of samples depends on the SamplesPerRead
@@ -36,7 +31,7 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
        OutputFormat = 'matrix';
     end
     
-    properties (Dependent, Nontunable)
+    properties (Nontunable)
         %SamplesPerRead Samples Per Read
         %   Number of samples per read, specified as a positive
         %   integer.
@@ -48,13 +43,7 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
             value = obj.SamplesPerFrame;
         end
         function set.SamplesPerRead(obj,value)
-            obj.SamplesPerFrame = value;
-        end
-        function value = get.FrameSize(obj)
-            value = obj.SamplesPerFrame;
-        end
-        function set.FrameSize(obj,value)
-            obj.SamplesPerFrame = value;
+            obj.SamplesPerFrame = value; %#ok<MCSUP> 
         end
     end
     
@@ -76,9 +65,6 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
             flag = isInactivePropertyImpl@adi.common.RxTx(obj, prop);
             flag = flag || strcmpi(prop,'EnabledChannels');
             flag = flag || strcmpi(prop,'SamplesPerFrame');
-            if ~obj.isInSimulink
-                flag = flag || strcmpi(prop,'FrameSize');
-            end
             % NOT SUPPORTED YET
             flag = flag || strcmpi(prop,'OutputFormat');
         end 
