@@ -6,6 +6,7 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
         %   integer from 2 to 16,777,216.
         SamplesPerFrame = 1024;
     end
+
     properties (Nontunable)
        %ReadMode Read Mode
        %    Specify whether to return the latest or the oldest data
@@ -30,7 +31,7 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
        OutputFormat = 'matrix';
     end
     
-    properties (Dependent, Nontunable)
+    properties (Nontunable)
         %SamplesPerRead Samples Per Read
         %   Number of samples per read, specified as a positive
         %   integer.
@@ -42,7 +43,7 @@ classdef (Abstract) Sensor  < adi.common.RxTx & adi.common.Attribute
             value = obj.SamplesPerFrame;
         end
         function set.SamplesPerRead(obj,value)
-            obj.SamplesPerFrame = value;
+            obj.SamplesPerFrame = value; %#ok<MCSUP> 
         end
     end
     
