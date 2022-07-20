@@ -1,5 +1,4 @@
-classdef (Abstract) Rx  < adi.common.RxTx & matlab.system.mixin.SampleTime ...
-         & adi.common.BufferADI
+classdef (Abstract) Rx  < adi.common.RxTx & adi.common.BufferADI
     % Rx: Common shared functions between receiver classes
     properties(Constant, Hidden, Logical)
         %EnableCyclicBuffers Enable Cyclic Buffers
