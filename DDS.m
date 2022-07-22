@@ -63,7 +63,11 @@ classdef (Abstract) DDS < matlabshared.libiio.base
     properties (Hidden)
         dds_channel_names = [];
     end
-    
+
+    properties (Abstract, Access = protected)
+       ConnectedToDevice
+    end
+
     methods
         % Check DataSource
         function set.DataSource(obj, value)
