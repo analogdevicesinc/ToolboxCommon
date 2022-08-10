@@ -106,8 +106,15 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
             releaseImpl(obj);
         end
     end
+    %% Hidden Advanced API Functions
+    methods (Hidden)
+        function dev = getIIODevice(obj, name)
+            % User accessible get device pointer for IIO device
+            dev = getDev(obj, name);
+        end
+    end
     
-    %% Hidden API Functions
+    %% Hidden Protected API Functions
     methods (Hidden, Access = protected)
         
         function setupImpl(obj)
