@@ -96,7 +96,7 @@ classdef (Abstract) Rx  < adi.common.RxTx & adi.common.BufferADI
                     % Convert hardware format to human format channel by
                     % channel
                     for l = 0:D2-1
-                        chanPtr = getChan(obj, obj.iioDev, obj.channel_names{l+1}, false);
+                        chanPtr = getChan(obj, obj.iioDev, obj.channel_names{obj.EnabledChannels(l+1)}, false);
                         % Pull out column
                         tmpPtrSrc = dataRAWPtr + D1*l;
                         tmpPtrDst = dataPtr + D1*l;
