@@ -53,6 +53,16 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
 %                 status = -1;
 %                 cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
 %             end            
-        end                
+        end
+
+        function setDebugAttributeRAW(obj,attr,value,phydev)
+            if nargin < 4
+                phydev = getDev(obj, obj.phyDevName);
+            end
+            status = iio_device_debug_attr_write(obj,phydev,attr,value);
+            if status < 1
+                cstatus(obj,status,['Attribute write failed for : ' attr]);
+            end
+        end   
     end       
 end
