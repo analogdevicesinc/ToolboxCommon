@@ -98,7 +98,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
         
-        function setAttributeRAW(obj,id,attr,value,isOutput,phydev)
+        function setAttributeRAW(obj,id,attr,value,isOutput,phydev,readAttrWritten)
+            if nargin < 7
+                readAttrWritten = true;
+            end
             if nargin < 6
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -107,8 +110,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             cstatus(obj,status,['Channel: ' id ' not found']);
             bytes = iio_channel_attr_write(obj,chanPtr,attr,value);
             if bytes <= 0
-                status = -1;
-                cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' value]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' value]);
+                end
             end
         end
         
