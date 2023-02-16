@@ -4,7 +4,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
     
     methods (Hidden)
         
-        function setAttributeLongLong(obj,id,attr,value,isOutput,tol,phydev)
+        function setAttributeLongLong(obj,id,attr,value,isOutput,tol,phydev,readAttrWritten)
+            if nargin < 8
+                readAttrWritten = true;
+            end
             if nargin < 7
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -20,12 +23,17 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
                 tol = double(sqrt(eps));
             end
             if abs(value - rValue) > tol
-                status = -1;
-                cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                end
             end
         end
         
-        function setAttributeDouble(obj,id,attr,value,isOutput,tol,phydev)
+        function setAttributeDouble(obj,id,attr,value,isOutput,tol,phydev,readAttrWritten)
+            if nargin < 8
+                readAttrWritten = true;
+            end
             if nargin < 7
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -41,8 +49,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
                 tol = double(sqrt(eps));
             end
             if abs(value - rValue) > tol
-                status = -1;
-                cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                end
             end
         end
         
@@ -69,7 +79,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
 
         
-        function setAttributeBool(obj,id,attr,value,isOutput,phydev)
+        function setAttributeBool(obj,id,attr,value,isOutput,phydev,readAttrWritten)
+            if nargin < 7
+                readAttrWritten = true;
+            end
             if nargin < 6
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -82,8 +95,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             [status, rValue] = iio_channel_attr_read_bool(obj,chanPtr,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
             if value ~= rValue
-                status = -1;
-                cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                end
             end
         end
         
