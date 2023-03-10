@@ -17,13 +17,13 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             status = iio_channel_attr_write_longlong(obj,chanPtr,attr,value);
             cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' num2str(value)]);
             % Check
-            [status, rValue] = iio_channel_attr_read_longlong(obj,chanPtr,attr);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
-            if ~exist('tol') || ~isa(tol,'double')
-                tol = double(sqrt(eps));
-            end
-            if abs(value - rValue) > tol
-                if readAttrWritten
+            if readAttrWritten
+                [status, rValue] = iio_channel_attr_read_longlong(obj,chanPtr,attr);
+                cstatus(obj,status,['Error reading attribute: ' attr]);
+                if ~exist('tol') || ~isa(tol,'double')
+                    tol = double(sqrt(eps));
+                end
+                if abs(value - rValue) > tol
                     status = -1;
                     cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
                 end
@@ -43,13 +43,13 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             status = iio_channel_attr_write_double(obj,chanPtr,attr,value);
             cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' num2str(value)]);
             % Check
-            [status, rValue] = iio_channel_attr_read_double(obj,chanPtr,attr);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
-            if ~exist('tol') || ~isa(tol,'double')
-                tol = double(sqrt(eps));
-            end
-            if abs(value - rValue) > tol
-                if readAttrWritten
+            if readAttrWritten
+                [status, rValue] = iio_channel_attr_read_double(obj,chanPtr,attr);
+                cstatus(obj,status,['Error reading attribute: ' attr]);
+                if ~exist('tol') || ~isa(tol,'double')
+                    tol = double(sqrt(eps));
+                end
+                if abs(value - rValue) > tol
                     status = -1;
                     cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
                 end
@@ -92,10 +92,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             status = iio_channel_attr_write_bool(obj,chanPtr,attr,value);
             cstatus(obj,status,['Attribute write failed for : ' attr]);
             % Check
-            [status, rValue] = iio_channel_attr_read_bool(obj,chanPtr,attr);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
-            if value ~= rValue
-                if readAttrWritten
+            if readAttrWritten
+                [status, rValue] = iio_channel_attr_read_bool(obj,chanPtr,attr);
+                cstatus(obj,status,['Error reading attribute: ' attr]);
+                if value ~= rValue
                     status = -1;
                     cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
                 end
