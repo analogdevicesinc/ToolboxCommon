@@ -146,18 +146,26 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             end
         end
         
-        function setDeviceAttributeRAW(obj,attr,value,phydev)
+        function setDeviceAttributeRAW(obj,attr,value,phydev,readAttrWritten)
+            if nargin < 5
+                readAttrWritten = true;
+            end
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
             bytes = iio_device_attr_write(obj,phydev,attr,value);
             if bytes <= 0
-                status = -1;
-                cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' value]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute write failed for : ' attr ' with value ' value]);
+                end
             end
         end
         
-        function setDeviceAttributeLongLong(obj,attr,value,phydev)
+        function setDeviceAttributeLongLong(obj,attr,value,phydev,readAttrWritten)
+            if nargin < 5
+                readAttrWritten = true;
+            end
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -166,8 +174,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             [status, rValue] = iio_device_attr_read_longlong(obj,phydev,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
             if value ~= rValue
-                status = -1;
-                cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                if readAttrWritten
+                    status = -1;
+                    cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
+                end
             end
         end
         
