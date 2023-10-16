@@ -1,4 +1,4 @@
-classdef (Abstract) DebugAttribute < matlabshared.libiio.base 
+classdef (Abstract) DebugAttribute < adi.common.Debug
     
     methods (Hidden)
         function setDebugAttributeLongLong(obj,attr,value,skipCheck,phydev)
@@ -63,6 +63,18 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
             if status < 1
                 cstatus(obj,status,['Attribute write failed for : ' attr]);
             end
-        end   
+        end
+
+        function data = getDebugAttributeRAW(obj,attr,phydev)
+            if nargin < 3
+                phydev = getDev(obj, obj.phyDevName);
+            end
+            len = 1024;
+            [nBytes,data] = iio_device_debug_attr_read(obj,phydev,attr,len);
+            if nBytes <= 0
+                status = -1;
+                cstatus(obj,status,['Attribute read failed for : ' attr]);
+            end
+        end  
     end       
 end
