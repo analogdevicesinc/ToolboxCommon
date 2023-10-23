@@ -3,6 +3,9 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
     methods (Hidden)
         
         function setRegister(obj, value, addr, phydev)
+        % iio_device_reg_write(struct iio_device *dev, uint32_t address, uint32_t value)
+        % 
+        % Set the value of a hardware register.
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -12,6 +15,9 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
         end
         
         function value = getRegister(obj, addr, phydev)
+        % iio_device_reg_read(struct iio_device *dev, uint32_t address, uint32_t *value)
+        %
+        % Read the value of a hardware register.
             if nargin < 3
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -21,6 +27,9 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
         end
         
         function setRegisterExtended(obj, value, addr, mask_bin, bit_shift, phydev)
+        % iio_device_reg_write(struct iio_device *dev, uint32_t address, uint32_t value)
+        % 
+        % Set the value of a hardware register given a bitmask.
             if (nargin < 6)
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -37,6 +46,9 @@ classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base
         end
         
         function value = getRegisterExtended(obj, addr, mask_bin, bit_shift, phydev)
+        % iio_device_reg_read(struct iio_device *dev, uint32_t address, uint32_t *value)
+        %
+        % Read the value of a hardware register given a bitmask.
             if (nargin < 5)
                 phydev = getDev(obj, obj.phyDevName);
             end

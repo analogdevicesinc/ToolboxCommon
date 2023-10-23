@@ -2,6 +2,9 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
     
     methods (Hidden)
         function setDebugAttributeLongLong(obj,attr,value,skipCheck,phydev)
+        % iio_device_debug_attr_write_longlong(const struct iio_device *dev, const char *attr, long long val)
+        % 
+        % Set a long long-valued debug attribute.
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
                 skipCheck = false;
@@ -27,12 +30,18 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
         end
 
         function rValue = getDebugAttributeLongLong(obj,attr)
+        % iio_device_debug_attr_read_longlong(const struct iio_device *dev, const char *attr, long long *val)
+        % 
+        % Read a long long-valued debug attribute.
             phydev = getDev(obj, obj.phyDevName);
             [status, rValue] = iio_device_debug_attr_read_longlong(obj,phydev,attr);
             cstatus(obj,status,['Error reading attribute: ' attr]);
         end
         
         function setDebugAttributeBool(obj,attr,value,skipCheck,phydev)
+        % iio_device_debug_attr_write_bool(const struct iio_device *dev, const char *attr, bool val)
+        % 
+        % Set a boolean-valued debug attribute.
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
                 skipCheck = false;
@@ -56,6 +65,9 @@ classdef (Abstract) DebugAttribute < matlabshared.libiio.base
         end
 
         function setDebugAttributeRAW(obj,attr,value,phydev)
+        % iio_device_debug_attr_write(const struct iio_device *dev, const char *attr, const char *src)
+        % 
+        % Set a raw-valued debug attribute.
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end

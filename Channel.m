@@ -37,10 +37,6 @@ classdef (Abstract) Channel < adi.common.RegisterReadWrite & adi.common.DebugAtt
                 attr = calllib(obj.libName, 'iio_channel_get_attr', chanPtr,indx);
             end
         end
-        
-        
-        
-        
     end
     
 end

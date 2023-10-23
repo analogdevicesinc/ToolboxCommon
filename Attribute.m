@@ -5,6 +5,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
     methods (Hidden)
         
         function setAttributeLongLong(obj,id,attr,value,isOutput,tol,phydev,readAttrWritten)
+        % iio_channel_attr_write_longlong(const struct iio_channel *chn, const char *attr, long long val)
+        %
+        % Set a long long-valued channel-specific attribute. 
             if nargin < 8
                 readAttrWritten = true;
             end
@@ -31,6 +34,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function setAttributeDouble(obj,id,attr,value,isOutput,tol,phydev,readAttrWritten)
+        % iio_channel_attr_write_double(const struct iio_channel *chn, const char *attr, double val)
+        % 
+        % Set a double-valued channel-specific attribute. 
             if nargin < 8
                 readAttrWritten = true;
             end
@@ -57,6 +63,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function rValue = getAttributeLongLong(obj,id,attr,isOutput,phydev)
+        % iio_channel_attr_read_longlong(const struct iio_channel *chn, const char *attr, long long *val)
+        % 
+        % Read a long long-valued channel-specific attribute. 
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -68,6 +77,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
 
         function rValue = getAttributeDouble(obj,id,attr,isOutput,phydev)
+        % iio_channel_attr_read_double(const struct iio_channel *chn, const char *attr, double *val)
+        % 
+        % Read a double-valued channel-specific attribute.
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -80,6 +92,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
 
         
         function setAttributeBool(obj,id,attr,value,isOutput,phydev,readAttrWritten)
+        % iio_channel_attr_write_bool(const struct iio_channel *chn, const char *attr, bool val)
+        % 
+        % Set a boolean-valued channel-specific attribute. 
             if nargin < 7
                 readAttrWritten = true;
             end
@@ -103,6 +118,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function rValue = getAttributeBool(obj,id,attr,isOutput,phydev)
+        % iio_channel_attr_read_bool(const struct iio_channel *chn, const char *attr, bool *val)
+        % 
+        % Read a boolean-valued channel-specific attribute.
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -114,6 +132,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function setAttributeRAW(obj,id,attr,value,isOutput,phydev,readAttrWritten)
+        % iio_channel_attr_write(const struct iio_channel *chn, const char *attr, const char *src)
+        % 
+        % Set a raw-valued channel-specific attribute. 
             if nargin < 7
                 readAttrWritten = true;
             end
@@ -133,6 +154,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function rValue = getAttributeRAW(obj,id,attr,isOutput,phydev)
+        % iio_channel_attr_read(const struct iio_channel *chn, const char *attr, char *dst, size_t len)
+        % 
+        % Read a raw-valued channel-specific attribute. 
             if nargin < 5
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -147,6 +171,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function setDeviceAttributeRAW(obj,attr,value,phydev,readAttrWritten)
+        % iio_device_attr_write(const struct iio_device *dev, const char *attr, const char *src)
+        % 
+        % Set a raw-valued device-specific attribute. 
             if nargin < 5
                 readAttrWritten = true;
             end
@@ -163,6 +190,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function setDeviceAttributeLongLong(obj,attr,value,phydev,readAttrWritten)
+        % iio_device_attr_write_longlong(const struct iio_device *dev, const char *attr, long long val)
+        % 
+        % Set a long long-valued device-specific attribute.
             if nargin < 5
                 readAttrWritten = true;
             end
@@ -182,6 +212,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function rValue = getDeviceAttributeLongLong(obj,attr,phydev)
+        % iio_device_attr_read_longlong(const struct iio_device *dev, const char *attr, long long *val)
+        % 
+        % Read a long long-valued device-specific attribute. 
             if nargin < 3
                 phydev = getDev(obj, obj.phyDevName);
             end
@@ -191,6 +224,9 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
         end
         
         function rValue = getDeviceAttributeRAW(obj,attr,len,phydev)
+        % iio_device_attr_read(const struct iio_device *dev, const char *attr, char *dst, size_t len)
+        % 
+        % Read a raw-valued device-specific attribute. 
             if nargin < 4
                 phydev = getDev(obj, obj.phyDevName);
             end
