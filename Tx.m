@@ -46,8 +46,8 @@ classdef (Abstract) Tx  < adi.common.RxTx & adi.common.DDS
                     %
                     outputData = complex(zeros(length(dataIn)*c,1));
                     for k = 1:2:c
-                        outputData(k+0:c:end,1) = real(int16(dataIn(:,index).'));
-                        outputData(k+1:c:end,1) = imag(int16(dataIn(:,index).'));
+                        outputData(k+0:c:end,1) = real(cast(dataIn(:,index).', obj.dataTypeStr));
+                        outputData(k+1:c:end,1) = imag(cast(dataIn(:,index).', obj.dataTypeStr));
                         index = index + 1;
                     end
                     
@@ -58,7 +58,7 @@ classdef (Abstract) Tx  < adi.common.RxTx & adi.common.DDS
                     %
                     outputData = zeros(length(dataIn)*c,1);
                     for k = 1:c
-                        outputData(k:c:end,1) = int16(dataIn(:,k).');
+                        outputData(k:c:end,1) = cast(dataIn(:,k).', obj.dataTypeStr);
                     end
                 end
                 %%
