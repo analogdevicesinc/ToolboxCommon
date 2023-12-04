@@ -24,7 +24,7 @@ def gen_page(template_filename, disable_nav):
         f.write(output)
 
 
-def gen_toc(pages, devices, designs):
+def gen_toc(pages, devices):
     # Import template
     loc = os.path.dirname(__file__)
     loc = os.path.join(loc, "_pages")
@@ -34,7 +34,7 @@ def gen_toc(pages, devices, designs):
     template = env.get_template("toc.tmpl")
 
     pages.remove('index')
-    output = template.render(pages=pages, devices=devices, designs=designs)
+    output = template.render(pages=pages, devices=devices)
 
     loc = os.path.dirname(__file__)
     loc = os.path.join(loc, "helptoc.xml")
@@ -43,7 +43,7 @@ def gen_toc(pages, devices, designs):
         f.write(output)
 
 
-def gen_pages_and_toc(matlab, devices, designs):
+def gen_pages_and_toc(matlab, devices):
 
     template_filenames = listdir("_pages")
 
@@ -57,4 +57,4 @@ def gen_pages_and_toc(matlab, devices, designs):
         template_filename = template_filename.replace(".md", "")
         pages.append(template_filename)
 
-    gen_toc(pages, devices, designs)
+    gen_toc(pages, devices)

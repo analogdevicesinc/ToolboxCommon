@@ -6,5 +6,5 @@ import os
 if __name__ == "__main__":
     gen_rd_svg()
     matlab = bool(os.environ.get("MATLAB"))
-    devices, designs = gen_sys_obj_pages(matlab)
-    gen_pages_and_toc(matlab, devices, designs)
+    devices = gen_sys_obj_pages(matlab)
+    gen_pages_and_toc(matlab, devices)
