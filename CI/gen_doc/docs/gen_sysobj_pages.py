@@ -69,4 +69,13 @@ def gen_sys_obj_pages(matlab):
         with open(loc, "w") as f:
             f.write(output)
 
+    # Update mkdocs.yml
+    loc = os.path.join("mkdocs.tmpl")
+    template = env.get_template(loc)
+    output = template.render(devices=devices, matlab=matlab)
+
+    loc = os.path.join("..", "mkdocs.yml")
+    with open(loc, "w") as f:
+        f.write(output)
+
     return devices
