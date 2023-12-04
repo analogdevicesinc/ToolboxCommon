@@ -69,22 +69,4 @@ def gen_sys_obj_pages(matlab):
         with open(loc, "w") as f:
             f.write(output)
 
-    ###############################################################################
-    # HDL Refdesigns
-    ###############################################################################
-    '''
-    from gen_hdl_refdesigns import update_hdl_refdesigns
-
-    designs = update_hdl_refdesigns()
-
-    # Update mkdocs.yml
-    loc = os.path.join("mkdocs.tmpl")
-    template = env.get_template(loc)
-    output = template.render(devices=devices, designs=designs, matlab=matlab)
-
-    loc = os.path.join("..", "mkdocs.yml")
-    with open(loc, "w") as f:
-        f.write(output)
-    '''
-
     return devices
