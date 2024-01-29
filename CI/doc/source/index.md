@@ -54,16 +54,8 @@ The following have device-specific implementations in MATLAB and Simulink. If a 
 
    install.md
    streaming.md
-   targeting.md
    examples.md
    objects.md
-   allrefdesigns.md
 
-```
-
-```{toctree}
-:caption: Development
-
-dev_hdl_workflow.md
 ```
 

@@ -23,6 +23,4 @@ help:
 
 gen_autodocs:
 	cd gen_pages ; \
-	$(PYTHON) gen_sysobj_pages.py ; \
-	$(PYTHON) gen_rd_svg.py ; \
-	$(PYTHON) gen_hdl_refdesigns.py
+	$(PYTHON) gen_sysobj_pages.py
