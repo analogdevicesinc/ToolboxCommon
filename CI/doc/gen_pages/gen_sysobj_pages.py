@@ -80,7 +80,7 @@ def gen_sys_obj_pages(matlab):
     template = env.get_template(loc)
     output = template.render(devices=devices, disable_nav=matlab)
 
-    loc = os.path.join(source_folder, "objects.md")
+    loc = os.path.join(_generated_folder, "objects.md")
     with open(loc, "w") as f:
         f.write(output)
     

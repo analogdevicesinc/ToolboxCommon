@@ -52,10 +52,7 @@ The following have device-specific implementations in MATLAB and Simulink. If a 
 .. toctree::
    :maxdepth: 1
 
-   install.md
-   streaming.md
-   examples.md
-   objects.md
+   _generated/objects.md
 
 ```
 

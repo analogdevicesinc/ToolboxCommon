@@ -1,7 +1,6 @@
-{% include 'header.tmpl' %}
 # Hardware Interface APIs
 
-Available hardware streaming interfaces in HSX Toolbox:
+Available hardware streaming interfaces in ToolboxCommon:
 <!--
 - [{{ obj }}](matlab:web([docroot '/3ptoolbox/analogdevicesinchighspeedconvertertoolboxtoolbox/doc/sysobjects/{{ obj }}/index.html']))
 -->
@@ -10,7 +9,7 @@ Available hardware streaming interfaces in HSX Toolbox:
 .. toctree::
    :maxdepth: 1
 {% for obj in devices %}
-   _generated/sysobjects/{{ obj }}
+   sysobjects/{{ obj }}
 {%- endfor %}
 
 ```
