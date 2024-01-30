@@ -42,8 +42,8 @@ for filename in os.listdir(os.path.join("..", "..", "..", "logos")):
 
 # -- Project information -----------------------------------------------------
 
-project = "Analog Devices, Inc. Transceiver Toolbox"
-copyright = "2019-2022, Analog Devices, Inc"
+project = "Analog Devices, Inc. ToolboxCommon"
+copyright = "2019-2024, Analog Devices, Inc"
 author = "Analog Devices, Inc."
 
 # The full version, including alpha/beta/rc tags
