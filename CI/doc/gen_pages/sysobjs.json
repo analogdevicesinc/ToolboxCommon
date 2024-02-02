@@ -1,0 +1,569 @@
+[
+  {
+    "name": "Attribute",
+    "dec": "    Documentation for Attribute<br>       doc Attribute<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for Attribute/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for Attribute/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for Attribute/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for Attribute/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for Attribute/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for Attribute/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for Attribute/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "DDS",
+    "dec": "    Documentation for DDS<br>       doc DDS<br>    DDS Blockset Documentation<br>       doc DDS<br>",
+    "props": [
+      {
+        "prop_name": "DataSource",
+        "prop_title": " DataSource Data Source",
+        "prop_description": "Data source, specified as one of the following: 'DMA' — Specify the host as the source of the data. 'DDS' — Specify the DDS on the radio hardware as the source of the data. In this case, each channel has two additive tones."
+      },
+      {
+        "prop_name": "DDSFrequencies",
+        "prop_title": " DDSFrequencies DDS Frequencies",
+        "prop_description": "Frequencies values in Hz of the DDS tone generators. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "DDSScales",
+        "prop_title": " DDSScales DDS Scales",
+        "prop_description": "Scale of DDS tones in range [0,1]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "DDSPhases",
+        "prop_title": " DDSPhases DDS Phases",
+        "prop_description": "Phases of DDS tones in range [0,360000]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "EnableCyclicBuffers",
+        "prop_title": " EnableCyclicBuffers Enable Cyclic Buffers",
+        "prop_description": "Enable Cyclic Buffers, configures transmit buffers to be cyclic, which makes them continuously repeat"
+      },
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": "DDS/EnabledChannels is a property.",
+        "prop_description": ""
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for DDS/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for DDS/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for DDS/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for DDS/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for DDS/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for DDS/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for DDS/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "Tx",
+    "dec": "    Documentation for Tx<br>       doc Tx<br>",
+    "props": [
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": " EnabledChannels Enabled Channels",
+        "prop_description": "Indexs of channels to be enabled. Input should be a [1xN] vector with the indexes of channels to be enabled. Order is irrelevant"
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for Tx/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for Tx/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for Tx/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for Tx/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for Tx/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataSource",
+        "prop_title": " DataSource Data Source",
+        "prop_description": "Data source, specified as one of the following: 'DMA' — Specify the host as the source of the data. 'DDS' — Specify the DDS on the radio hardware as the source of the data. In this case, each channel has two additive tones.Help for Tx/DataSource is inherited from superclass adi.common.DDS"
+      },
+      {
+        "prop_name": "DDSFrequencies",
+        "prop_title": " DDSFrequencies DDS Frequencies",
+        "prop_description": "Frequencies values in Hz of the DDS tone generators. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set.Help for Tx/DDSFrequencies is inherited from superclass adi.common.DDS"
+      },
+      {
+        "prop_name": "DDSScales",
+        "prop_title": " DDSScales DDS Scales",
+        "prop_description": "Scale of DDS tones in range [0,1]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set.Help for Tx/DDSScales is inherited from superclass adi.common.DDS"
+      },
+      {
+        "prop_name": "DDSPhases",
+        "prop_title": " DDSPhases DDS Phases",
+        "prop_description": "Phases of DDS tones in range [0,360000]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set.Help for Tx/DDSPhases is inherited from superclass adi.common.DDS"
+      },
+      {
+        "prop_name": "EnableCyclicBuffers",
+        "prop_title": " EnableCyclicBuffers Enable Cyclic Buffers",
+        "prop_description": "Enable Cyclic Buffers, configures transmit buffers to be cyclic, which makes them continuously repeatHelp for Tx/EnableCyclicBuffers is inherited from superclass adi.common.DDS"
+      }
+    ]
+  },
+  {
+    "name": "BufferADI",
+    "dec": "    Documentation for BufferADI<br>       doc BufferADI<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for BufferADI/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for BufferADI/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for BufferADI/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for BufferADI/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for BufferADI/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for BufferADI/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for BufferADI/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "Channel",
+    "dec": "    Documentation for Channel<br>       helpwin Channel<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for Channel/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for Channel/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for Channel/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for Channel/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for Channel/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for Channel/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for Channel/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "DDS",
+    "dec": "    Documentation for DDS<br>       doc DDS<br>    DDS Blockset Documentation<br>       doc DDS<br>",
+    "props": [
+      {
+        "prop_name": "DataSource",
+        "prop_title": " DataSource Data Source",
+        "prop_description": "Data source, specified as one of the following: 'DMA' — Specify the host as the source of the data. 'DDS' — Specify the DDS on the radio hardware as the source of the data. In this case, each channel has two additive tones."
+      },
+      {
+        "prop_name": "DDSFrequencies",
+        "prop_title": " DDSFrequencies DDS Frequencies",
+        "prop_description": "Frequencies values in Hz of the DDS tone generators. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "DDSScales",
+        "prop_title": " DDSScales DDS Scales",
+        "prop_description": "Scale of DDS tones in range [0,1]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "DDSPhases",
+        "prop_title": " DDSPhases DDS Phases",
+        "prop_description": "Phases of DDS tones in range [0,360000]. For complex data devices the input is a [2xN] matrix where N is the available channels on the board. For complex data devices this is at most max(EnabledChannels)*2. For non-complex data devices this is at most max(EnabledChannels). If N < this upper limit, other DDSs are not set."
+      },
+      {
+        "prop_name": "EnableCyclicBuffers",
+        "prop_title": " EnableCyclicBuffers Enable Cyclic Buffers",
+        "prop_description": "Enable Cyclic Buffers, configures transmit buffers to be cyclic, which makes them continuously repeat"
+      },
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": "DDS/EnabledChannels is a property.",
+        "prop_description": ""
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for DDS/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for DDS/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for DDS/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for DDS/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for DDS/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for DDS/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for DDS/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "DebugAttribute",
+    "dec": "    obj = DebugAttribute<br>    Documentation for DebugAttribute<br>       doc DebugAttribute<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for DebugAttribute/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for DebugAttribute/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for DebugAttribute/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for DebugAttribute/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for DebugAttribute/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for DebugAttribute/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for DebugAttribute/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAttribute",
+    "dec": "    Documentation for DeviceAttribute<br>       doc DeviceAttribute<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for DeviceAttribute/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for DeviceAttribute/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for DeviceAttribute/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for DeviceAttribute/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for DeviceAttribute/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for DeviceAttribute/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for DeviceAttribute/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "RegisterReadWrite",
+    "dec": "    obj = RegisterReadWrite<br>    Documentation for RegisterReadWrite<br>       doc RegisterReadWrite<br>",
+    "props": [
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for RegisterReadWrite/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for RegisterReadWrite/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for RegisterReadWrite/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for RegisterReadWrite/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for RegisterReadWrite/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "channelCount",
+        "prop_title": "  Number of channels",
+        "prop_description": "Number of enabled channelsHelp for RegisterReadWrite/channelCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "DataTimeout",
+        "prop_title": "  Timeout for I/O",
+        "prop_description": "Timeout for I/O operations (in seconds) 0 = non-blocking (or default context timeout) Inf = infiniteHelp for RegisterReadWrite/DataTimeout is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "Rx",
+    "dec": "    Documentation for Rx<br>       doc Rx<br>",
+    "props": [
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": " EnabledChannels Enabled Channels",
+        "prop_description": "Indexs of channels to be enabled. Input should be a [1xN] vector with the indexes of channels to be enabled. Order is irrelevant"
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for Rx/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for Rx/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for Rx/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for Rx/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for Rx/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "RxTx",
+    "dec": "    obj = RxTx<br>    Documentation for RxTx<br>       doc RxTx<br>",
+    "props": [
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": " EnabledChannels Enabled Channels",
+        "prop_description": "Indexs of channels to be enabled. Input should be a [1xN] vector with the indexes of channels to be enabled. Order is irrelevant"
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for RxTx/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "SamplesPerFrame",
+        "prop_title": "  Frame size",
+        "prop_description": "Size of the frame in samplesHelp for RxTx/SamplesPerFrame is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for RxTx/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for RxTx/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for RxTx/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  },
+  {
+    "name": "Sensor",
+    "dec": "    Documentation for Sensor<br>       helpwin Sensor<br>",
+    "props": [
+      {
+        "prop_name": "ReadMode",
+        "prop_title": " ReadMode Read Mode",
+        "prop_description": "Specify whether to return the latest or the oldest data samples. The number of samples depends on the SamplesPerRead value. The data read from the sensor is stored in the MATLAB buffer."
+      },
+      {
+        "prop_name": "OutputFormat",
+        "prop_title": "    Set the output format of the data returned by executing the read",
+        "prop_description": "function. When the OutputFormat is set to timetable, the data returned has the following fields (if supported by device): Time — Time stamps in datetime or duration format Acceleration — N-by-3 array in units of m/s^2 AngularVelocity — N-by-3 array in units of rad/s MagneticField — N-by-3 array in units of µT (microtesla) When the OutputFormat is set to matrix, the data is returned as matrices of acceleration, angular velocity, magnetic field, and time stamps. The units for the sensor readings are the same as the timetable format. The size of each matrix is N-by-3. N is the number of samples per read specified by SamplesPerRead. The three columns of each field represent the measurements in x, y, and z axes."
+      },
+      {
+        "prop_name": "SamplesPerRead",
+        "prop_title": " SamplesPerRead Samples Per Read",
+        "prop_description": "Number of samples per read, specified as a positive integer."
+      },
+      {
+        "prop_name": "EnabledChannels",
+        "prop_title": " EnabledChannels Enabled Channels",
+        "prop_description": "Indexs of channels to be enabled. Input should be a [1xN] vector with the indexes of channels to be enabled. Order is irrelevant"
+      },
+      {
+        "prop_name": "uri",
+        "prop_title": "  URI - remote host URI",
+        "prop_description": "Hostname or IP address of remote libIIO deviceHelp for Sensor/uri is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "devName",
+        "prop_title": "  Device name",
+        "prop_description": "Name of the libIIO deviceHelp for Sensor/devName is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "kernelBuffersCount",
+        "prop_title": "  Kernel buffers count",
+        "prop_description": "The number of buffers allocated in the kernel for data transfersHelp for Sensor/kernelBuffersCount is inherited from superclass matlabshared.libiio.base"
+      },
+      {
+        "prop_name": "dataTypeStr",
+        "prop_title": "  Data type for the output data",
+        "prop_description": "A String Representing the data typeHelp for Sensor/dataTypeStr is inherited from superclass matlabshared.libiio.base"
+      }
+    ]
+  }
+]
