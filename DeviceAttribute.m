@@ -1,7 +1,7 @@
-classdef (Abstract) DeviceAttribute < adi.common.RegisterReadWrite & adi.common.DebugAttribute
+classdef (Abstract) DeviceAttribute < adi.common.Compat
     % DeviceAttribute IIO device attribute function calls
     
-    methods (Hidden)
+    methods (Hidden, Access = {?handle})
         function cnt = iio_context_get_devices_count(obj, ctxPtr)
         % iio_context_get_devices_count(const struct iio_context * 	ctx)
         %
@@ -51,6 +51,5 @@ classdef (Abstract) DeviceAttribute < adi.common.RegisterReadWrite & adi.common.
                 attr = calllib(obj.libName, 'iio_device_get_attr', devPtr, index);
             end
         end
-        
     end
 end
