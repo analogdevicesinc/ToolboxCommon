@@ -12,6 +12,16 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
         %   irrelevant
         EnabledChannels = 1;
     end
+
+    properties(Hidden)
+        %SkipInit Skip Init
+        %   Skip the initialization of properties on hardware during
+        %   intialization. Internally this skips the setupInit method
+        %   which is responsible for writing initial state into the device.
+        %   Note when this is false, class properties will not reflect the
+        %   hardware state until a property is written to.
+        SkipInit = false;
+    end
     
     properties (Dependent,Hidden)
         channelCount
@@ -223,7 +233,9 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
             obj.bufIsCyclic = obj.EnableCyclicBuffers;
             
             % Set attributes
-            setupInit(obj);
+            if ~obj.SkipInit
+                setupInit(obj);
+            end
             
             % Enable the channel(s)
             ec = length(obj.EnabledChannels);
