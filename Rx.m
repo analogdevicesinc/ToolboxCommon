@@ -74,42 +74,44 @@ classdef (Abstract) Rx  < adi.common.RxTx & adi.common.BufferADI
             % 'EnabledChannels'. 'data' will be complex if the devices
             % assumes complex data operations.
             
-            % Get the data            
-            if obj.ComplexData
-                kd = 1;
-                ce = length(obj.EnabledChannels);
-                [dataRAW, valid] = getData(obj);
-                data = complex(zeros(obj.SamplesPerFrame,ce));
-                for k = 1:ce
-                    data(:,k) = complex(dataRAW(kd,:),dataRAW(kd+1,:)).';
-                    kd = kd + 2;
-                end
-            else
-                if obj.BufferTypeConversionEnable
+            % Get the data
+            if strcmpi(obj.LibIIOVersion,'0.25')
+                if obj.ComplexData
+                    kd = 1;
+                    ce = length(obj.EnabledChannels);
                     [dataRAW, valid] = getData(obj);
-                    % Channels must be in columns or pointer math fails
-                    dataRAW = dataRAW.';
-                    [D1, D2] = size(dataRAW);
-                    data = coder.nullcopy(zeros(D1, D2, obj.dataTypeStr));
-                    dataPtr = libpointer(obj.ptrTypeStr,data);
-                    dataRAWPtr = libpointer(obj.ptrTypeStr,dataRAW);
-                    % Convert hardware format to human format channel by
-                    % channel
-                    for l = 0:D2-1
-                        chanPtr = getChan(obj, obj.iioDev, obj.channel_names{obj.EnabledChannels(l+1)}, false);
-                        % Pull out column
-                        tmpPtrSrc = dataRAWPtr + D1*l;
-                        tmpPtrDst = dataPtr + D1*l;
-                        setdatatype(tmpPtrSrc,obj.ptrTypeStr, D1, 1);
-                        setdatatype(tmpPtrDst,obj.ptrTypeStr, D1, 1);
-                        for k=0:D1-1
-                            iio_channel_convert(obj,chanPtr,tmpPtrDst+k,tmpPtrSrc+k);
-                        end
+                    data = complex(zeros(obj.SamplesPerFrame,ce));
+                    for k = 1:ce
+                        data(:,k) = complex(dataRAW(kd,:),dataRAW(kd+1,:)).';
+                        kd = kd + 2;
                     end
-                    data = dataPtr.Value;
                 else
-                    [data, valid] = getData(obj);
-                    data = data.';
+                    if obj.BufferTypeConversionEnable
+                        [dataRAW, valid] = getData(obj);
+                        % Channels must be in columns or pointer math fails
+                        dataRAW = dataRAW.';
+                        [D1, D2] = size(dataRAW);
+                        data = coder.nullcopy(zeros(D1, D2, obj.dataTypeStr));
+                        dataPtr = libpointer(obj.ptrTypeStr,data);
+                        dataRAWPtr = libpointer(obj.ptrTypeStr,dataRAW);
+                        % Convert hardware format to human format channel by
+                        % channel
+                        for l = 0:D2-1
+                            chanPtr = getChan(obj, obj.iioDev, obj.channel_names{obj.EnabledChannels(l+1)}, false);
+                            % Pull out column
+                            tmpPtrSrc = dataRAWPtr + D1*l;
+                            tmpPtrDst = dataPtr + D1*l;
+                            setdatatype(tmpPtrSrc,obj.ptrTypeStr, D1, 1);
+                            setdatatype(tmpPtrDst,obj.ptrTypeStr, D1, 1);
+                            for k=0:D1-1
+                                iio_channel_convert(obj,chanPtr,tmpPtrDst+k,tmpPtrSrc+k);
+                            end
+                        end
+                        data = dataPtr.Value;
+                    else
+                        [data, valid] = getData(obj);
+                        data = data.';
+                    end
                 end
             end
             

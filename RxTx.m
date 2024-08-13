@@ -1,4 +1,4 @@
-classdef (Abstract) RxTx < matlabshared.libiio.base
+classdef (Abstract) RxTx < adi.common.Compat
     
     properties (Hidden, Access=protected)
         enabledChannels = false;
@@ -121,7 +121,22 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
             % Call the superclass method
             obj.Count(1,obj);
             obj.setupDataType(obj.dataTypeStr);
-            setupImpl@matlabshared.libiio.base(obj);
+            % if strcmpi(obj.LibIIOVersion,'1.0')
+            %     obj.libName = 'libiio1';
+            %     loadlibrary(obj.libName,'iio.h');
+            % elseif strcmpi(obj.LibIIOVersion,'0.25')
+            %     loadlibrary(obj.libName,'iio.h');
+            % else
+            %     error('libiio not found\n');
+            % end
+            % unloadlibrary(obj.libName);
+
+            if strcmpi(obj.LibIIOVersion,'1.0')
+                obj.libName = 'libiio1';
+                setupImpl@adi.libiio.base(obj);
+            elseif strcmpi(obj.LibIIOVersion,'0.25')
+                setupImpl@matlabshared.libiio.base(obj);
+            end
         end
         
         function releaseImpl(obj)
@@ -225,35 +240,37 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
             % Set attributes
             setupInit(obj);
             
-            % Enable the channel(s)
-            ec = length(obj.EnabledChannels);
-            if obj.ComplexData
-                for k=1:ec
-                    indx = obj.EnabledChannels(k)*2-1;
-                    name = obj.channel_names{indx};
-                    enableChannel(obj, obj.iioDev, name, obj.isOutput);
-                    name = obj.channel_names{indx+1};
-                    enableChannel(obj, obj.iioDev, name, obj.isOutput);
-                    
+            if strcmpi(obj.LibIIOVersion,'0.25')
+                % Enable the channel(s)
+                ec = length(obj.EnabledChannels);
+                if obj.ComplexData
+                    for k=1:ec
+                        indx = obj.EnabledChannels(k)*2-1;
+                        name = obj.channel_names{indx};
+                        enableChannel(obj, obj.iioDev, name, obj.isOutput);
+                        name = obj.channel_names{indx+1};
+                        enableChannel(obj, obj.iioDev, name, obj.isOutput);
+                        
+                    end
+                else
+                    for k=1:obj.channelCount
+                        name = obj.channel_names{obj.EnabledChannels(k)};
+                        enableChannel(obj, obj.iioDev, name, obj.isOutput);
+                    end
                 end
-            else
-                for k=1:obj.channelCount
-                    name = obj.channel_names{obj.EnabledChannels(k)};
-                    enableChannel(obj, obj.iioDev, name, obj.isOutput);
+                obj.enabledChannels = true;
+                
+                % Create the buffers
+                if obj.channelCount>0
+                    status = createBuf(obj);
+                    if status
+                        releaseChanBuffers(obj);
+                        cerrmsg(obj,status,['Failed to create buffer for: ' obj.devName]);
+                        return
+                    end
+                else
+                    status = 0;
                 end
-            end
-            obj.enabledChannels = true;
-            
-            % Create the buffers
-            if obj.channelCount>0
-                status = createBuf(obj);
-                if status
-                    releaseChanBuffers(obj);
-                    cerrmsg(obj,status,['Failed to create buffer for: ' obj.devName]);
-                    return
-                end
-            else
-                status = 0;
             end
             
         end
