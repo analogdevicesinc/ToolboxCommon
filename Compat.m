@@ -48,7 +48,8 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
         % consistency
         function [devPtr, status] = iio_context_find_device(obj, ctxPtr, name)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                [status, devPtr] = iio_context_find_device@adi.libiio.base(obj, ctxPtr, name);
+                devPtr = adi.libiio.context.iio_context_find_device(ctxPtr, name);
+                status = -int32(isNull(devPtr));
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 % wrapper doesn't exist
                 [status, devPtr] = iio_context_find_device@matlabshared.libiio.base(obj, ctxPtr, name);
@@ -57,7 +58,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function chanPtr = iio_device_find_channel(obj,phydev,id,isOutput)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                chanPtr = iio_device_find_channel@adi.libiio.device(obj,phydev,id,isOutput);
+                chanPtr = adi.libiio.device.iio_device_find_channel(phydev,id,isOutput);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 chanPtr = iio_device_find_channel@matlabshared.libiio.device(obj,phydev,id,isOutput);
             end
@@ -65,7 +66,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function status = iio_channel_attr_write_longlong(obj,chanPtr,attr,value)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                status = iio_channel_attr_write_longlong@adi.libiio.channel(obj,chanPtr,attr,value);
+                status = adi.libiio.channel.iio_channel_attr_write_longlong(chanPtr,attr,value);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 status = iio_channel_attr_write_longlong@matlabshared.libiio.channel(obj,chanPtr,attr,value);
             end
@@ -73,7 +74,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function [status, rValue] = iio_channel_attr_read_longlong(obj,chanPtr,attr)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                [status, rValue] = iio_channel_attr_read_longlong@adi.libiio.channel(obj,chanPtr,attr);
+                [status, rValue] = adi.libiio.channel.iio_channel_attr_read_longlong(chanPtr,attr);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 [status, rValue] = iio_channel_attr_read_longlong@matlabshared.libiio.channel(obj);
             end
@@ -81,7 +82,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function status = iio_channel_attr_write_bool(obj,chanPtr,attr,value)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                status = iio_channel_attr_write_bool@adi.libiio.channel(obj,chanPtr,attr,value);
+                status = adi.libiio.channel.iio_channel_attr_write_bool(chanPtr,attr,value);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 status = iio_channel_attr_write_bool@matlabshared.libiio.channel(obj,chanPtr,attr,value);
             end
@@ -89,7 +90,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function [status, value] = iio_channel_attr_read_bool(obj,chanPtr,attr)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                [status, value] = iio_channel_attr_read_bool@adi.libiio.channel(obj,chanPtr,attr);
+                [status, value] = adi.libiio.channel.iio_channel_attr_read_bool(chanPtr,attr);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 [status, value] = iio_channel_attr_read_bool@matlabshared.libiio.channel(obj,chanPtr,attr);
             end
@@ -97,7 +98,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function nBytes = iio_channel_attr_write(obj, chanPtr, attr, src)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                nBytes = iio_channel_attr_write@adi.libiio.channel(obj, chanPtr, attr, src);
+                nBytes = adi.libiio.channel.iio_channel_attr_write(chanPtr, attr, src);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 nBytes = iio_channel_attr_write@matlabshared.libiio.channel(obj, chanPtr, attr, src);
             end
@@ -105,7 +106,7 @@ classdef (Abstract) Compat < adi.common.BufferADI & ...
 
         function nBytes = iio_device_attr_write(obj, devPtr, attr, src)
             if strcmpi(obj.LibIIOVersion,'1.0')
-                nBytes = iio_device_attr_write@adi.libiio.device(obj, devPtr, attr, src);
+                nBytes = adi.libiio.device.iio_device_attr_write(devPtr, attr, src);
             elseif strcmpi(obj.LibIIOVersion,'0.25')
                 nBytes = iio_device_attr_write@matlabshared.libiio.device(obj, devPtr, attr, src);
             end
