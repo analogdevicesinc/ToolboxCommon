@@ -1,7 +1,7 @@
 classdef (Abstract) Debug < matlabshared.libiio.base
     % DeviceAttribute IIO device attribute function calls
     
-    methods (Hidden)
+    methods (Hidden, Access = ?handle)
         
         function [nBytes, value] = iio_device_debug_attr_read(obj, devPtr, attr, len)
         % iio_device_debug_attr_read(const struct iio_device *dev, const char *attr)
