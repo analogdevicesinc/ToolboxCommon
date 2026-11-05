@@ -1,7 +1,7 @@
 classdef (Abstract) Channel < adi.common.RegisterReadWrite & adi.common.DebugAttribute
     % DeviceAttribute IIO device attribute function calls
     
-    methods (Hidden)
+    methods (Hidden, Access = ?handle)
         function cnt = iio_channel_get_attrs_count(obj, chanPtr)
         % iio_channel_get_attrs_count(const struct iio_channel * chanPtr)
         %

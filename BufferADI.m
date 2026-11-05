@@ -1,7 +1,7 @@
 classdef (Abstract) BufferADI < matlabshared.libiio.base 
     % BufferADI IIO buffer management function calls
    
-    methods (Hidden)
+    methods (Hidden, Access = ?handle)
         function iio_channel_convert(obj, chanPtr, dst, src)
         % iio_channel_convert (struct iio_channel *chn, void * dst, const void* src)
         %
@@ -14,4 +14,3 @@ classdef (Abstract) BufferADI < matlabshared.libiio.base
         end
     end
 end
-
