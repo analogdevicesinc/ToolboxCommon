@@ -1,4 +1,4 @@
-classdef (Abstract) DDS < matlabshared.libiio.base
+classdef (Abstract) DDS < adi.common.IIOBase
     %DDS DDS features
     
     properties (Nontunable)

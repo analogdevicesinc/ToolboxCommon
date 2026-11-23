@@ -1,4 +1,4 @@
-classdef (Abstract) RegisterReadWrite < matlabshared.libiio.base 
+classdef (Abstract) RegisterReadWrite < adi.common.IIOBase
     
     methods (Hidden)
         

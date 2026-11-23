@@ -1,4 +1,4 @@
-classdef (Abstract) RxTx < matlabshared.libiio.base
+classdef (Abstract) RxTx < adi.common.IIOBase
     
     properties (Hidden, Access=protected)
         enabledChannels = false;
@@ -121,12 +121,12 @@ classdef (Abstract) RxTx < matlabshared.libiio.base
             % Call the superclass method
             obj.Count(1,obj);
             obj.setupDataType(obj.dataTypeStr);
-            setupImpl@matlabshared.libiio.base(obj);
+            setupImpl@adi.common.IIOBase(obj);
         end
         
         function releaseImpl(obj)
             obj.Count(-1,obj);
-            releaseImpl@matlabshared.libiio.base(obj);
+            releaseImpl@adi.common.IIOBase(obj);
         end
         
         % Hide unused parameters when in specific modes

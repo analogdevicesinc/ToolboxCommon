@@ -2,40 +2,35 @@ classdef (Abstract) Channel < adi.common.RegisterReadWrite & adi.common.DebugAtt
     % DeviceAttribute IIO device attribute function calls
     
     methods (Hidden)
-        function cnt = iio_channel_get_attrs_count(obj, chanPtr)
+        function cnt = iio_channel_get_attrs_count(~, chanPtr)
         % iio_channel_get_attrs_count(const struct iio_channel * chanPtr)
         %
         % Enumerate the channel found in the given device.
-            if useCalllib(obj)
-                cnt = calllib(obj.libName, 'iio_channel_get_attrs_count', chanPtr);
-            end
+            cnt = numel(chanPtr.attrs);
         end
         
-        function name = iio_channel_get_name(obj, chanPtr)
+        function name = iio_channel_get_name(~, chanPtr)
         % iio_channel_get_name(const struct iio_channel *chn)
         %
         % Get the name of the given channel
-            if useCalllib(obj)
-                name = calllib(obj.libName, 'iio_channel_get_name', chanPtr);
-            end
+            name = chanPtr.name;
         end
         
-        function id = iio_channel_get_id(obj, chanPtr)
+        function id = iio_channel_get_id(~, chanPtr)
         % iio_channel_get_id(const struct iio_channel *chn)
         %
         % Get the id of the given channel
-            if useCalllib(obj)
-                id = calllib(obj.libName, 'iio_channel_get_id', chanPtr);
-            end
+            id = chanPtr.id;
         end
         
-        function attr = iio_channel_get_attr(obj, chanPtr, indx)
+        function attr = iio_channel_get_attr(~, chanPtr, indx)
         % iio_channel_get_attr(const struct iio_channel *chn, indx)
         %
         % Get the attr of the given channel by index
-            if useCalllib(obj)
-                attr = calllib(obj.libName, 'iio_channel_get_attr', chanPtr,indx);
-            end
+            % indx counts from 0. The result is the name of the
+            % attribute, as with libiio v0.
+            attrs = chanPtr.attrs;
+            attr = attrs(indx+1).name;
         end
         
         

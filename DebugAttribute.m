@@ -1,4 +1,4 @@
-classdef (Abstract) DebugAttribute < matlabshared.libiio.base 
+classdef (Abstract) DebugAttribute < adi.common.IIOBase
     
     methods (Hidden)
         function setDebugAttributeLongLong(obj,attr,value,skipCheck,phydev)

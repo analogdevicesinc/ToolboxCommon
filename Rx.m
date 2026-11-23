@@ -74,45 +74,29 @@ classdef (Abstract) Rx  < adi.common.RxTx & adi.common.BufferADI
             % 'EnabledChannels'. 'data' will be complex if the devices
             % assumes complex data operations.
             
-            % Get the data            
-            if obj.ComplexData
-                kd = 1;
-                ce = length(obj.EnabledChannels);
-                [dataRAW, valid] = getData(obj);
-                data = complex(zeros(obj.SamplesPerFrame,ce));
-                for k = 1:ce
-                    data(:,k) = complex(dataRAW(kd,:),dataRAW(kd+1,:)).';
-                    kd = kd + 2;
-                end
-            else
-                if obj.BufferTypeConversionEnable
-                    [dataRAW, valid] = getData(obj);
-                    % Channels must be in columns or pointer math fails
-                    dataRAW = dataRAW.';
-                    [D1, D2] = size(dataRAW);
-                    data = coder.nullcopy(zeros(D1, D2, obj.dataTypeStr));
-                    dataPtr = libpointer(obj.ptrTypeStr,data);
-                    dataRAWPtr = libpointer(obj.ptrTypeStr,dataRAW);
-                    % Convert hardware format to human format channel by
-                    % channel
-                    for l = 0:D2-1
-                        chanPtr = getChan(obj, obj.iioDev, obj.channel_names{obj.EnabledChannels(l+1)}, false);
-                        % Pull out column
-                        tmpPtrSrc = dataRAWPtr + D1*l;
-                        tmpPtrDst = dataPtr + D1*l;
-                        setdatatype(tmpPtrSrc,obj.ptrTypeStr, D1, 1);
-                        setdatatype(tmpPtrDst,obj.ptrTypeStr, D1, 1);
-                        for k=0:D1-1
-                            iio_channel_convert(obj,chanPtr,tmpPtrDst+k,tmpPtrSrc+k);
-                        end
-                    end
-                    data = dataPtr.Value;
-                else
-                    [data, valid] = getData(obj);
-                    data = data.';
-                end
-            end
+            % The frame arrives converted and in its final shape from
+            % the stream (see getStreamFormat)
+            [data, valid] = readFrame(obj);
             
+        end
+        
+        function [dataType, isComplex, raw] = getStreamFormat(obj)
+            % Format of a received frame, as the M-code data path of
+            % this class delivered it:
+            % - complex devices: double, complex, one column per I/Q
+            %   pair, holding the storage words as they are
+            % - other devices: class dataTypeStr, one column per
+            %   channel, the storage words as they are, or the samples
+            %   in host format (shifted, masked, sign extended) with
+            %   BufferTypeConversionEnable
+            isComplex = obj.ComplexData;
+            if isComplex
+                dataType = 'double';
+                raw = true;
+            else
+                dataType = obj.dataTypeStr;
+                raw = ~obj.BufferTypeConversionEnable;
+            end
         end
         
     end
