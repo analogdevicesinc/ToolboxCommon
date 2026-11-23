@@ -19,5 +19,15 @@ Data moves through one `iio.RxStream` or `iio.TxStream` per object
 (`readFrame`, `writeFrame`), which converts a whole frame in one call. A class
 states the format of its frames in `getStreamFormat`.
 
+`DataTimeout` (seconds) is the `Timeout` of the stream. A finite, positive
+value (the default is 5) makes the stream wait with non-blocking dequeues 1 ms
+apart; 0 and `Inf` give one blocking dequeue bounded by the timeout of the
+context, so `Inf` is not an infinite wait as it was documented for
+`matlabshared.libiio.base`.
+
+An error raised by `cstatus` has the identifier `adi:iio:status`. When a call
+of the bindings failed in the same operation its message is added, with what
+failed: `(status -22; last libiio error, write of frequency: ...)`.
+
 Not available with this base: code generation, Simulink and HDL targeting;
 `libName`, `useCalllib` and `useCodegen`; `getData` and `sendData`.

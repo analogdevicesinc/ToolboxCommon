@@ -58,7 +58,11 @@ classdef (Abstract) IIOBase < matlab.System
     properties (Hidden, Access = private)
         %streamChannels Channel ids in column order (I then Q when complex)
         streamChannels = {};
-        %lastIIOError Message of the last error an iio_* wrapper caught
+        %lastIIOError What failed last in an iio_* wrapper, and the message
+        %   of the bindings: 'write of frequency: ...'. cstatus and cerrmsg
+        %   add it to their error. A write starts again without it, and so
+        %   does a lookup that finds nothing: both are a new operation,
+        %   and what failed before them (and was ignored) is not its cause.
         lastIIOError = '';
     end
 
@@ -194,9 +198,12 @@ classdef (Abstract) IIOBase < matlab.System
             cstatus(obj, status, ['Failed to find channel: ' name]);
         end
 
-        function status = cPtrCheck(~, ptr)
+        function status = cPtrCheck(obj, ptr)
             % 0 for an object, -ENODEV for an empty result
             if isempty(ptr)
+                % a lookup that finds nothing is not caused by an earlier
+                % failure of the bindings
+                obj.lastIIOError = '';
                 status = -19;
             else
                 status = 0;
@@ -212,7 +219,7 @@ classdef (Abstract) IIOBase < matlab.System
                 if isempty(detail)
                     error('adi:iio:status', '%s (status %d)', msg, status);
                 else
-                    error('adi:iio:status', '%s (status %d: %s)', msg, status, detail);
+                    error('adi:iio:status', '%s (status %d; last libiio error, %s)', msg, status, detail);
                 end
             end
         end
@@ -223,9 +230,10 @@ classdef (Abstract) IIOBase < matlab.System
             obj.lastIIOError = '';
             releaseImpl(obj);
             if isempty(detail)
-                detail = iio.strerror(abs(status));
+                error('adi:iio:status', '%s (status %d: %s)', msg, status, iio.strerror(abs(status)));
+            else
+                error('adi:iio:status', '%s (status %d; last libiio error, %s)', msg, status, detail);
             end
-            error('adi:iio:status', '%s (status %d: %s)', msg, status, detail);
         end
 
         %% Channels and the buffer
@@ -249,6 +257,14 @@ classdef (Abstract) IIOBase < matlab.System
                 return
             end
             [dataType, isComplex, raw] = getStreamFormat(obj);
+            % DataTimeout (seconds) is the Timeout of the stream (ms). A
+            % finite, positive value makes the stream wait with
+            % non-blocking dequeues 1 ms apart (libiio-conv,
+            % iio_conv_stream_set_timeout); RxTx sets 5, so that is the
+            % default. 0 and Inf give -1: one blocking dequeue, bounded
+            % by the timeout of the context. matlabshared.libiio.base
+            % documented 0 as non-blocking or the context default and Inf
+            % as infinite; Inf is not infinite here.
             timeout = -1;
             if isprop(obj, 'DataTimeout')
                 t = obj.DataTimeout;
@@ -272,7 +288,7 @@ classdef (Abstract) IIOBase < matlab.System
                         NumBlocks = numBlocks, Timeout = timeout);
                 end
             catch err
-                status = iioFail(obj, err);
+                status = iioFail(obj, err, ['opening the buffer of ' obj.devName]);
             end
         end
 
@@ -412,12 +428,13 @@ classdef (Abstract) IIOBase < matlab.System
             try
                 value = devPtr.reg_read(addr);
             catch err
-                status = iioFail(obj, err);
+                status = iioFail(obj, err, 'register read');
             end
         end
 
         function status = iio_device_reg_write(obj, devPtr, addr, value)
             status = 0;
+            obj.lastIIOError = '';
             if isempty(devPtr)
                 status = -19;
                 return
@@ -425,7 +442,7 @@ classdef (Abstract) IIOBase < matlab.System
             try
                 devPtr.reg_write(addr, value);
             catch err
-                status = iioFail(obj, err);
+                status = iioFail(obj, err, 'register write');
             end
         end
 
@@ -460,13 +477,14 @@ classdef (Abstract) IIOBase < matlab.System
             obj.streamChannels = {};
         end
 
-        function status = iioFail(obj, err)
+        function status = iioFail(obj, err, what)
             % Negative errno of an error of the bindings ("iio:<ERRNO>").
-            % Any other error is not caught.
+            % Any other error is not caught. WHAT names the operation
+            % ('write of frequency'); it is kept with the message.
             if ~strncmp(err.identifier, 'iio:', 4)
                 rethrow(err);
             end
-            obj.lastIIOError = err.message;
+            obj.lastIIOError = [what ': ' err.message];
             status = -adi.common.IIOBase.errnoOf(err.identifier(5:end));
         end
 
@@ -485,6 +503,7 @@ classdef (Abstract) IIOBase < matlab.System
             end
             [a, status] = adi.common.IIOBase.findAttr(parent, name, kind);
             if status < 0
+                obj.lastIIOError = '';
                 return
             end
             try
@@ -500,13 +519,14 @@ classdef (Abstract) IIOBase < matlab.System
                         status = numel(value) + 1;
                 end
             catch err
-                status = iioFail(obj, err);
+                status = iioFail(obj, err, ['read of ' name]);
             end
         end
 
         function status = attrWrite(obj, parent, name, kind, type, value)
             % status: 0, or for type 'string' the number of bytes written
             % (the text and its terminator); negative errno on failure
+            obj.lastIIOError = '';
             [a, status] = adi.common.IIOBase.findAttr(parent, name, kind);
             if status < 0
                 return
@@ -526,7 +546,7 @@ classdef (Abstract) IIOBase < matlab.System
                         status = numel(text) + 1;
                 end
             catch err
-                status = iioFail(obj, err);
+                status = iioFail(obj, err, ['write of ' name]);
             end
         end
 
