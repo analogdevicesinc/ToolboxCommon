@@ -29,5 +29,14 @@ An error raised by `cstatus` has the identifier `adi:iio:status`. When a call
 of the bindings failed in the same operation its message is added, with what
 failed: `(status -22; last libiio error, write of frequency: ...)`.
 
+`adi.common.Debug` is kept as an empty class on `IIOBase`, which has its
+`iio_device_debug_attr_read`. `adi.common.JESD204` and `getDebugAttributeRAW`
+need nothing else. The helpers of `Channel`, `DeviceAttribute` and `BufferADI`
+have `Access = ?handle`, as on ToolboxCommon master.
+
+`adi.common.Tx` hands the frame to the stream, which rounds and saturates at
+the limits of the storage word of the channel; it makes no cast to
+`dataTypeStr`.
+
 Not available with this base: code generation, Simulink and HDL targeting;
 `libName`, `useCalllib` and `useCodegen`; `getData` and `sendData`.

@@ -171,10 +171,10 @@ classdef (Abstract) Attribute < adi.common.RegisterReadWrite & ...
             end
             iio_device_attr_write_longlong(obj,phydev,attr,value);
             % Check
-            [status, rValue] = iio_device_attr_read_longlong(obj,phydev,attr);
-            cstatus(obj,status,['Error reading attribute: ' attr]);
-            if value ~= rValue
-                if readAttrWritten
+            if readAttrWritten
+                [status, rValue] = iio_device_attr_read_longlong(obj,phydev,attr);
+                cstatus(obj,status,['Error reading attribute: ' attr]);
+                if value ~= rValue
                     status = -1;
                     cstatus(obj,status,['Attribute ' attr ' return value ' num2str(rValue) ', expected ' num2str(value)]);
                 end

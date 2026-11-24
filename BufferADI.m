@@ -5,7 +5,7 @@ classdef (Abstract) BufferADI < adi.common.IIOBase
     %   stream of adi.common.IIOBase (BufferTypeConversionEnable of
     %   adi.common.Rx), a whole frame in one call.
 
-    methods (Hidden)
+    methods (Hidden, Access = ?handle)
         function iio_channel_convert(~, ~, ~, ~)
         % iio_channel_convert (struct iio_channel *chn, void * dst, const void* src)
         %

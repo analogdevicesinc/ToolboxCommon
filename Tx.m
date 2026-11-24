@@ -27,7 +27,9 @@ classdef (Abstract) Tx  < adi.common.RxTx & adi.common.DDS
             % Format of a transmitted frame: one column per channel
             % (per I/Q pair for complex devices), the values are the
             % storage words. They are rounded to the nearest integer
-            % and saturate at the limits of the storage word.
+            % and saturate at the limits of the storage word of the
+            % channel, whatever its width: no cast to int16 or to
+            % dataTypeStr is made here.
             dataType = obj.dataTypeStr;
             isComplex = obj.ComplexData;
             raw = true;
