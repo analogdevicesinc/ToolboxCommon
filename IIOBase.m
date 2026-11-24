@@ -372,6 +372,12 @@ classdef (Abstract) IIOBase < matlab.System
             bytes = attrWrite(obj, devPtr, attr, 'device', 'string', value);
         end
 
+        function bytes = iio_device_attr_write_raw(obj, devPtr, attr, value)
+            % The bytes of VALUE (char or uint8) as they are, without a
+            % terminator: the number of bytes written
+            bytes = attrWrite(obj, devPtr, attr, 'device', 'raw', value);
+        end
+
         function status = iio_device_attr_write_bool(obj, devPtr, attr, value)
             status = attrWrite(obj, devPtr, attr, 'device', 'bool', value);
         end
@@ -524,8 +530,9 @@ classdef (Abstract) IIOBase < matlab.System
         end
 
         function status = attrWrite(obj, parent, name, kind, type, value)
-            % status: 0, or for type 'string' the number of bytes written
-            % (the text and its terminator); negative errno on failure
+            % status: 0, for type 'string' the number of bytes written
+            % (the text and its terminator), for type 'raw' the number of
+            % bytes written; negative errno on failure
             obj.lastIIOError = '';
             [a, status] = adi.common.IIOBase.findAttr(parent, name, kind);
             if status < 0
@@ -540,6 +547,8 @@ classdef (Abstract) IIOBase < matlab.System
                     case 'double'
                         % six decimals, as libiio v0 wrote a double
                         a.write_double(double(value), Exact = false);
+                    case 'raw'
+                        status = double(a.write_raw(uint8(value)));
                     otherwise
                         text = char(value);
                         a.write_string(text);

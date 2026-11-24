@@ -29,6 +29,9 @@ An error raised by `cstatus` has the identifier `adi:iio:status`. When a call
 of the bindings failed in the same operation its message is added, with what
 failed: `(status -22; last libiio error, write of frequency: ...)`.
 
+`iio_device_attr_write_raw` writes the bytes of a text without a terminator,
+as the function of that name did in libiio v0.
+
 `adi.common.Debug` is kept as an empty class on `IIOBase`, which has its
 `iio_device_debug_attr_read`. `adi.common.JESD204` and `getDebugAttributeRAW`
 need nothing else. The helpers of `Channel`, `DeviceAttribute` and `BufferADI`
